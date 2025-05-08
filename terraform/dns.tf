@@ -3,3 +3,11 @@ data "cloudflare_zone" "misery_systems" {
     name = "misery.systems"
   }
 }
+
+resource "cloudflare_dns_record" "pollster" {
+  zone_id = data.cloudflare_zone.misery_systems.zone_id
+  name    = "downward.misery.systems"
+  content = local.ingress_hostname
+  type    = "CNAME"
+  ttl     = 1
+}
